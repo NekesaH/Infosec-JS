@@ -13,7 +13,16 @@ app.use(helmet.ieNoOpen());
 
 app.use(helmet.hsts({  maxAge: ninetyDaysInSeconds,  force: true}));
 app.use(helmet.dnsPrefetchControl());
-app.use(helmet.noCache())
+app.use(helmet.noCache());
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: ["'self'"], // Trust only your website address by default
+      scriptSrc: ["'self'", 'trusted-cdn.com'] // Allow scripts from 'self' and 'trusted-cdn.com'
+      // Add other directives as needed
+    }
+  })
+);
 
 
 
